@@ -1,6 +1,5 @@
 import mysql.connector
 
-
 try:
     db = mysql.connector.connect(host='localhost', database='to_do', user='root', password='niema123')
     cursor = db.cursor()
@@ -19,16 +18,26 @@ def print_tasks():
 
 
 def add_task():
-    title = input("Enter title...")
-    description = input("Enter description...")
-    sql = "INSERT INTO tasks (id, name, description) VALUES (Null,%s,%s)"
-    val = (title,description)
-    cursor.execute(sql,val)
-    db.commit()
+    try:
+        title = input("Enter title...")
+        description = input("Enter description...")
+        sql = "INSERT INTO tasks (id, name, description) VALUES (Null,%s,%s)"
+        val = (title,description)
+        cursor.execute(sql,val)
+        db.commit()
+        print("Task added succesfully")
+        print("")
+    except:
+        print("Failed to add task into list")
 
 
 def remove_task():
-    print_tasks()
+        id = input("Enter id of task to delete it...")
+        sql = "DELETE FROM tasks WHERE id = {}".format(id)
+        cursor.execute(sql)
+        db.commit()
+        print("Task deleted succesfully")
+        print("")
 
 
 while True:
