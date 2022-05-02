@@ -1,5 +1,6 @@
 import mysql.connector
 
+
 try:
     db = mysql.connector.connect(host='localhost', database='to_do', user='root', password='niema123')
     cursor = db.cursor()
@@ -7,6 +8,7 @@ try:
         print("Connected to {} database".format(db.database))
 except:
     print("Error while connecting to database")
+
 
 def print_tasks():
     cursor.execute("SELECT * FROM tasks")
@@ -16,14 +18,17 @@ def print_tasks():
     print("")
 
 
-
 def add_task():
-    pass
+    title = input("Enter title...")
+    description = input("Enter description...")
+    sql = "INSERT INTO tasks (id, name, description) VALUES (Null,%s,%s)"
+    val = (title,description)
+    cursor.execute(sql,val)
+    db.commit()
+
 
 def remove_task():
     print_tasks()
-
-
 
 
 while True:
@@ -31,7 +36,7 @@ while True:
 
     match operation:
         case 'Add':
-            pass
+            add_task()
         case 'Print':
             print_tasks()
         case 'Delete':
